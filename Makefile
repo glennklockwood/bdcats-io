@@ -12,7 +12,7 @@ H5CFLAGS = -m64 -DUSE_V4_SSE -DOMPI_SKIP_MPICXX
 H5PFLAGS = -I${HDF5root}/include -I${H5Proot}/include
 H5LIB = -L. -lm -ldl
 H5PLIB = -L${HDF5root}/lib -L${H5Proot}/lib -lH5Part -lhdf5 -lz
-H5ADD_FLAGS = -DPARALLEL_IO
+H5ADD_FLAGS = -DPARALLEL_IO -DH5_USE_16_API=1
 
 APP = $(PROJ)
 CFLAGS=-c -w 

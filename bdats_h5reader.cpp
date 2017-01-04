@@ -19,7 +19,11 @@ void  open_datasets (dataset_info_t *data_info_array, Points *pts)
         hsize_t proc_offset;
         int     space_ndims;
         hid_t  dataspace;
+#ifdef H5_USE_16_API
+        dset_id  = H5Dopen(data_info_array->open_file_id, data_info_array->name);
+#else
         dset_id  = H5Dopen(data_info_array->open_file_id, data_info_array->name, H5P_DEFAULT);
+#endif
 	if (dset_id < 0)
 	{
 		printf ("Error opening dataset: %s, in open_datasets [H5Dopen]", data_info_array->name);
