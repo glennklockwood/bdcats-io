@@ -1,19 +1,19 @@
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
-/*										*/
-/*   Files:         Have to list the files  					*/
-/*										*/	
-/*   Description:  BDATS: BigData Analytics at Trillion Scale    		*/ 
-/*                                                                           	*/
-/*   Author:  Md. Mostofa Ali Patwary                                        	*/
-/*            Research Scientist, Parallel Computing Lab, Intel Corporation    	*/
-/*            email: mostofa.ali.patwary@intel.com                          	*/
-/*										*/
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/*                                                                             */
+/*   Files:         Have to list the files                                     */
+/*                                                                             */        
+/*   Description:  BDATS: BigData Analytics at Trillion Scale                  */ 
+/*                                                                             */
+/*   Author:  Md. Mostofa Ali Patwary                                          */
+/*            Research Scientist, Parallel Computing Lab, Intel Corporation    */
+/*            email: mostofa.ali.patwary@intel.com                             */
+/*                                                                             */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #ifndef _BDATS_DATA_STRUCT_
 #define _BDATS_DATA_STRUCT_
 
-#include "bdats_headers.h"
+//#include "bdats_headers.h"
 
 //#define _BDATS_DEBUG_
 #define STAT_COMM_TIME
@@ -92,7 +92,7 @@
 #define UPPER(i) ((i<<1)+1)
 
 
-typedef float 	BDATS_decimal;
+typedef float         BDATS_decimal;
 #define BDATS_decimal_mpi MPI_FLOAT
 
 typedef int64_t BDATS_gIndex; 
@@ -101,38 +101,38 @@ typedef int64_t BDATS_gIndex;
 typedef int BDATS_lIndex;
 #define BDATS_lIndex_mpi MPI_INT
 
-typedef int	BDATS_kdt_cIndex;
+typedef int        BDATS_kdt_cIndex;
 typedef float   BDATS_kdt_decimal;
 
 struct BoundingBox
 {
-	BDATS_decimal 	m_lower;
-	BDATS_decimal	m_upper;
+        BDATS_decimal         m_lower;
+        BDATS_decimal        m_upper;
 };
 
 struct clus_solution
 {
-	BDATS_gIndex m_cluster_IDs;
-	BDATS_lIndex m_nei_count;	
+        BDATS_gIndex m_cluster_IDs;
+        BDATS_lIndex m_nei_count;        
 };
 
 struct Points
 {
-	int64_t 	m_num_local_points; 	// local points count including gathered
-	int64_t 	m_num_dims; 		// dimension of each point
-	BDATS_decimal**	m_data;			// coordinates: 2D array, each D for one dimension data together
-	int* 		m_class; 
-	///BoundingBox* 	m_local_bbox; // local bounding box 
-	BoundingBox*    m_global_bbox; // global bounding box 
-	
-	int*		m_vec_prIDs;		// 32 bit should be good enough 
-	BDATS_lIndex*	m_vec_local_IDs;	// could be 32 bit or 64 bit, assuming 64 bit
-	BDATS_gIndex*	m_vec_global_IDs;	// 64 bit, no doubt  	
-	BDATS_gIndex*	m_vec_cluster_IDs; 
+        int64_t         m_num_local_points;         // local points count including gathered
+        int64_t         m_num_dims;                 // dimension of each point
+        BDATS_decimal**        m_data;                        // coordinates: 2D array, each D for one dimension data together
+        int*                 m_class; 
+        ///BoundingBox*         m_local_bbox; // local bounding box 
+        BoundingBox*    m_global_bbox; // global bounding box 
+        
+        int*                m_vec_prIDs;                // 32 bit should be good enough 
+        BDATS_lIndex*        m_vec_local_IDs;        // could be 32 bit or 64 bit, assuming 64 bit
+        BDATS_gIndex*        m_vec_global_IDs;        // 64 bit, no doubt          
+        BDATS_gIndex*        m_vec_cluster_IDs; 
 
-	int64_t		m_num_global_points; 	
-	int		m_mpi_comm_current_tag;
-	int64_t 	m_num_points_gathered; // points gathered from neighbors
+        int64_t                m_num_global_points;         
+        int                m_mpi_comm_current_tag;
+        int64_t         m_num_points_gathered; // points gathered from neighbors
 };
 
 #endif

@@ -11,6 +11,7 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
 
 #include "bdats_h5reader.h"
+#include <iostream>
 
 void  open_datasets (dataset_info_t *data_info_array, Points *pts)
 {
@@ -156,7 +157,7 @@ void get_metadata_all_datasets (char* filename, dataset_info_t *data_info_array,
         }
 
 	if (mpi_rank == 0) {
-	    cout << "pts->m_num_global_points " << pts->m_num_global_points << " pts->m_num_dims " << pts->m_num_dims << endl;
+	    std::cout << "pts->m_num_global_points " << pts->m_num_global_points << " pts->m_num_dims " << pts->m_num_dims << std::endl;
 	}
 
         H5PartCloseFile(H5P_fileid);
@@ -182,7 +183,7 @@ void get_metadata_select_datasets (char* filename, dataset_info_t *data_info_arr
         }
 
 	if (mpi_rank == 0) {
-	    cout << "pts->m_num_global_points " << pts->m_num_global_points << " pts->m_num_dims " << pts->m_num_dims << endl;
+	    std::cout << "pts->m_num_global_points " << pts->m_num_global_points << " pts->m_num_dims " << pts->m_num_dims << std::endl;
 	}
 
         H5PartCloseFile(H5P_fileid);
@@ -210,7 +211,7 @@ void get_metadata_select_datasets_h5 (char* filename, dataset_info_t *data_info_
         }
 
 	if (mpi_rank == 0) {
-	    cout << "pts->m_num_global_points " << pts->m_num_global_points << " pts->m_num_dims " << pts->m_num_dims << endl;
+	    std::cout << "pts->m_num_global_points " << pts->m_num_global_points << " pts->m_num_dims " << pts->m_num_dims << std::endl;
 	}
 
         H5PartCloseFile(H5P_fileid);
