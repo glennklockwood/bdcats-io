@@ -1,2 +1,3 @@
 *.o
-dbscan_reader
+dbscan_read
+dbscan_read_dyn

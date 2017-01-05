@@ -1,32 +1,23 @@
-CC = CC
-SRCS = $(wildcard *.cpp)
-HDRS = $(wildcard *.h)
-OBJS = $(SRCS:.cpp=.o)
-DIRS = $(subst /, ,$(CURDIR))
-PROJ = dbscan_reader 
+# HDF5_ROOT = ... #(provided by module load cray-hdf5-parallel)
+H5PART_ROOT=$(HOME)/apps.cori-knl/H5Part-1.6.6-intel-18API
 
-# HDF5 related
-H5Proot = $(HOME)/apps.edison/H5Part-1.6.6-intel
-HDF5root = $(HDF5_ROOT)
-H5CFLAGS = -m64 -DUSE_V4_SSE -DOMPI_SKIP_MPICXX
-H5PFLAGS = -I${HDF5root}/include -I${H5Proot}/include
-H5LIB = -L. -lm -ldl
-H5PLIB = -L${HDF5root}/lib -L${H5Proot}/lib -lH5Part -lhdf5 -lz
-H5ADD_FLAGS = -DPARALLEL_IO -DH5_USE_16_API=1
+CXX       = CC
+CXXFLAGS  = -DPARALLEL_IO -I$(H5PART_ROOT)/include -I$(HDF5_ROOT)/include
+LDFLAGS   = -L$(H5PART_ROOT)/lib  -L$(HDF5_ROOT)/lib 
+LDLIBS    = -lhdf5 -lH5Part -lstdc++
 
-APP = $(PROJ)
-CFLAGS=-c -w 
-LDFLAGS= -O3 # -openmp 
-LIBS=
+.PHONY: all clean
 
-all: $(APP)
+BINARIES = dbscan_read dbscan_read_dyn
+OBJECTS = dbscan_read.o bdats_h5reader.o
 
-$(APP): $(OBJS)
-	$(CC) $(LDFLAGS) $(OBJS) -o $(APP) $(LIBS) -I. $(H5LIB) $(H5PLIB) $(H5ADD_FLAGS) -ldl
+all: $(BINARIES)
 
-%.o: %.cpp $(HDRS) $(MF)
-	$(CC) $(CFLAGS) $(LDFLAGS) $< -o $@ $(H5CFLAGS) $(H5PFLAGS) $(H5ADD_FLAGS)
+dbscan_read: $(OBJECTS)
+
+dbscan_read_dyn: LDFLAGS += -dynamic
+dbscan_read_dyn: $(OBJECTS)
+	$(CC) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) -o $@
 
 clean:
-	rm -f *.o $(APP)
-
+	rm -f $(OBJECTS) $(BINARIES)
